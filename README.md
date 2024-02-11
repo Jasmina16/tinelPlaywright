@@ -3,5 +3,5 @@
 3. Install Playwright Pytest plugin from CLI: pip install pytest-playwright
 4. Install the required browsers from CLI: playwright install
 5. Fetch code from Github: git clone https://github.com/Jasmina16/tinelPlaywright
-6. Position into ...\playwright_Tinel_Test\src
+6. Position into ...\tinelPlaywright\src
 7. Run test cases:  python -m pytest test/ --html=report.html --self-contained-html
