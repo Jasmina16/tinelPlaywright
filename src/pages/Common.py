@@ -1,4 +1,4 @@
-SCREENSHOT_PATH = "C:/Users/korisnik/PycharmProjects/playwright/screenshots/"
+SCREENSHOT_PATH = "screenshots/"
 WEBSHOP_URL = "https://qa-task-fe.vercel.app/"
 RESET_PASSWORD_URL = "https://qa-task-fe.vercel.app/resetpasword"
 LOGIN_URL = "https://qa-task-fe.vercel.app/login"
