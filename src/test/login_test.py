@@ -105,9 +105,11 @@ def test_login_failed_registered_user_reduced_browser_size(browser_type):
         )
         page = context.new_page()
         login = LoginPage(page)
-        sc_path = get_scrn_name("test_login_failed_registered_user_reduced_browser_size_" + browser_type)
+        sc_path = get_scrn_name("test_login_failed_registered_user_reduced_browser_size")
 
         login.navigate()
+        page.screenshot(path=sc_path, full_page=True)
+
         expect(page.locator("input[name=\"email\"]")).to_be_visible()
         expect(page.locator("input[name=\"password\"]")).to_be_visible()
         login.provide_email_and_password("jasmina@gmail.com", "jasmina1")
@@ -115,8 +117,6 @@ def test_login_failed_registered_user_reduced_browser_size(browser_type):
         expect(page).to_have_url(get_webshop_link())
         print("Expected URL after successful login is: " + get_webshop_link() + ". "
               "Actual URL is: " + page.url)
-
-        page.screenshot(path=sc_path, full_page=True)
 
         context.close()
         browser.close()

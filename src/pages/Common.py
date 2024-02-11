@@ -20,13 +20,13 @@ def get_devices():
 
 
 def get_scrn_name(test_id):
-    dir = test_id.split("_")[1]
-    print(dir)
-    if dir == 'login':
+    d = test_id.split("_")[1]
+
+    if d == 'login':
         path = SCREENSHOT_PATH + 'login/' + test_id + '.png'
-    elif dir == 'registration':
+    elif d == 'registration':
         path = SCREENSHOT_PATH + 'registration/' + test_id + '.png'
-    elif dir == 'reset':
+    elif d == 'reset':
         path = SCREENSHOT_PATH + 'reset_password/' + test_id + '.png'
     else:
         raise TypeError("Wrong value!")
