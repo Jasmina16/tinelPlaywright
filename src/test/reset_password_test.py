@@ -21,6 +21,7 @@ def test_reset_password_page_link_verification(browser_type):
         reset.navigate_to_reset_password_page()
         expect(page.get_by_text("Zatraži novu lozinku")).to_be_visible()
         page.screenshot(path=sc_path, full_page=True)
+        print("URL is: " + page.url)
 
         context.close()
         browser.close()

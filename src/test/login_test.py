@@ -100,6 +100,7 @@ def test_login_failure_unregistered_user(browser_type):
 def test_login_failed_registered_user_reduced_browser_size(browser_type):
     with sync_playwright() as p:
         browser = getattr(p, browser_type).launch(headless=False)
+        # tablet in landscape orientation
         context = browser.new_context(
             viewport={'width': 1024, 'height': 500}  # Set the desired width and height
         )

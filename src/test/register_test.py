@@ -11,6 +11,8 @@ import string
 import pytest
 
 DEVICES = get_devices()
+REGISTRIRAJ_SE = "Registriraj se na Tinel Workshop"
+PRIJAVI_SE = "Prijavi se na Tinel Workshop"
 
 
 # BUG#2 Mobile Registration Form cannot be accessed: Hidden by Left-side Image
@@ -27,10 +29,10 @@ def test_registration_verify_register_and_cancel_links(browser_type, device_type
 
         register.navigate_to_register_page()
         page.screenshot(path=sc_path, full_page=True)
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
 
         page.get_by_role("button", name="Odustani").click()
-        expect(page.get_by_text("Prijavi se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(PRIJAVI_SE)).to_be_visible()
 
         context.close()
         browser.close()
@@ -58,7 +60,7 @@ def test_registration_success_mandatory_fields(browser_type):
         register.click_register()
         page.screenshot(path=sc_path, full_page=True)
 
-        expect(page.get_by_text("Prijavi se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(PRIJAVI_SE)).to_be_visible()
         login.provide_email_and_password(email, "Aaaa1234")
 
         expect(page).to_have_url(get_webshop_link())
@@ -97,7 +99,7 @@ def test_registration_success_all_fields_valid_input(browser_type):
         register.click_register()
         page.screenshot(path=sc_path, full_page=True)
 
-        expect(page.get_by_text("Prijavi se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(PRIJAVI_SE)).to_be_visible()
         login.provide_email_and_password(email, "Aaaa1234")
 
         expect(page).to_have_url(get_webshop_link())
@@ -129,7 +131,7 @@ def test_registration_failed_used_email(browser_type):
         register.click_register()
         page.screenshot(path=sc_path, full_page=True)
 
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
         print("Expected URL after successful login is: " + get_register_url() + ". " +
               "Actual URL is: " + page.url)
 
@@ -158,7 +160,7 @@ def test_registration_failed_terms_unaccepted(browser_type):
         register.click_register()
         page.screenshot(path=sc_path, full_page=True)
 
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
         print("Expected URL after successful login is: " + get_register_url() + ". " +
               "Actual URL is: " + page.url)
 
@@ -196,7 +198,7 @@ def test_registration_failed_all_fields_invalid_input(browser_type):
 
         page.wait_for_timeout(1000)
         # page.screenshot(path=sc_path, full_page=True)
-        expect(page.get_by_text("Prijavi se na Tinel Workshop")).to_have_count(0)
+        expect(page.get_by_text(PRIJAVI_SE)).to_have_count(0)
 
         expect(page).to_have_url(get_register_url())
         print("Expected URL after failed registration is: " + get_register_url() + ". " +
@@ -226,7 +228,7 @@ def test_registration_failed_empty_mandatory_fields(browser_type):
         register.click_register()
         page.screenshot(path=sc_path, full_page=True)
 
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
         expect(page.locator("span >> nth=1")).to_contain_text("Ime je obavezno")
         expect(page.locator("span >> nth=3")).to_contain_text("Prezime je obavezno")
         expect(page.locator("span >> nth=5")).to_contain_text("Obavezno polje")
@@ -252,12 +254,11 @@ def test_registration_verify_tinel_workshop_image_link(browser_type):
         sc_path = get_scrn_name("test_registration_verify_tinel_workshop_image_link")
 
         register.navigate_to_register_page()
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
 
         page.get_by_test_id("logo-link").dblclick()
-        expect(page.get_by_text("Prijavi se na Tinel Workshop")).to_be_visible()
-        assert (get_login_url() == page.url, "URL after clicking 'tinel workshop' link should be: "
-                + get_login_url())
+        expect(page.get_by_text(PRIJAVI_SE)).to_be_visible()
+
         print("Expected URL after clicking on 'tinel workshop' image is: " + get_login_url() + ". "
               "Actual URL is: " + page.url)
         page.screenshot(path=sc_path, full_page=True)
@@ -268,24 +269,23 @@ def test_registration_verify_tinel_workshop_image_link(browser_type):
 
 # BUG#3 impacts this test due to SVG element on the left side which partially hide "tinel Workshop" link
 @pytest.mark.parametrize("browser_type", ['chromium', 'firefox', 'webkit'])
-def test_registration_failed_tinel_workshop_image_link(browser_type):
+def test_registration_failed_tinel_workshop_image_link_reduced_browser_size(browser_type):
     with sync_playwright() as p:
         browser = getattr(p, browser_type).launch(headless=False)
+        # tablet in landscape orientation
         context = browser.new_context(
-            viewport={'width': 800, 'height': 600}  # Set the desired width and height
+            viewport={'width': 1024, 'height': 500}  # Set the desired width and height
         )
         page = context.new_page()
         register = RegisterPage(page)
-        sc_path = get_scrn_name("test_registration_failed_tinel_workshop_image_link")
+        sc_path = get_scrn_name("test_registration_failed_tinel_workshop_image_link_reduced_browser_size")
 
         register.navigate_to_register_page()
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
 
         page.screenshot(path=sc_path, full_page=True)
         page.get_by_test_id("logo-link").dblclick()
-        expect(page.get_by_text("Prijavi se na Tinel Workshop")).to_be_visible()
-        assert (get_login_url() == page.url, "URL after clicking 'Tinel workshop' link should be: "
-                + get_login_url())
+        expect(page.get_by_text(PRIJAVI_SE)).to_be_visible()
 
         context.close()
         browser.close()
@@ -301,12 +301,12 @@ def test_registration_verify_terms_and_conditions_link(browser_type):
         sc_path = get_scrn_name("test_registration_verify_terms_and_conditions_link")
 
         register.navigate_to_register_page()
-        expect(page.get_by_text("Registriraj se na Tinel Workshop")).to_be_visible()
+        expect(page.get_by_text(REGISTRIRAJ_SE)).to_be_visible()
 
         page.get_by_role("link", name="Opće uvjete.").click()
         page.screenshot(path=sc_path, full_page=True)
         expect(page).not_to_have_url(get_register_url())
-        print("url is " + page.url)
+
         # expect(page).to_have_url("https://qa-task-fe.vercel.app/terms-of-use")
 
         context.close()
