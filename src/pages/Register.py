@@ -49,7 +49,6 @@ class RegisterPage:
         self.page.get_by_placeholder("DD.MM.YYYY").click()
         self.page.get_by_role("combobox").nth(1).select_option(year)
         self.page.get_by_label(date).click()
-        # page.get_by_label("Choose Wednesday, February 28th,").click()
 
     def enter_address(self, address):
         self.page.locator("input[name=\"address\"]").click()
